@@ -1,5 +1,6 @@
 function [Cal_dat,Cal_forc] = reescaling(sig,forc,DOF,Fdata,mod,opt)
 
+Cal_forc = [];
 Nsignal = zeros(size(sig));
 Rsignal = zeros(size(sig));
 RNsignal = zeros(size(sig));
@@ -27,7 +28,7 @@ for i = 1:size(sig,1)
         % Normalization + proportional rescaling (/max)
         NPsignal(i,:) = Nsignal(i,:) / (max(max(Nsignal(i,:))));
         % Proportional
-        Psignal(i,:) = sig(i,:) / 400; 
+        Psignal(i,:) = sig(i,:) / 400;
         % MAX
         Msignal(i,:) = sig(i,:) / (max(max(sig(i,:))));
         % Choose the pre-processed signal
@@ -42,12 +43,10 @@ for i = 1:size(sig,1)
         else
             disp('Reescaling option unknown')
         end
-        % When mode = 1 use only choosen repetition for calibration
-        if mod == 1
+end
+ if mod == 1
             Cal_forc(DOF,:) = forc(DOF,Fdata);
         else
             Cal_forc(DOF,:) = forc(DOF,:);
-        end
-        
-end
+ end
 end
