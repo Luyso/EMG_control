@@ -7,6 +7,11 @@ function [s,f] = loadindexNINA(D,mod)
 
 if mod == 0
     
+    % DOF #1 (Index)    {0 - 50001}         3 repetitions
+    % DOF #2 (Middle)   {100000 - 150000}   3 repetitions
+    % DOF #3 (Ring)     {200000 - 250000}   3 repetitions
+    % DOF #4 (little)   {295000 - 345000}   3 repetitions
+
     if D == 1
         s = 1;
         f = 50001;
@@ -22,6 +27,13 @@ if mod == 0
     end
     
 elseif mod == 1
+    
+    % TASK #1 (Index)       {50000 - 100000} 3 reps
+    % TASK #2 (Middle)      {165000 - 210000} 3 reps
+    % TASK #3 (Ring)        {246000 - 296000} 3 reps
+    % TASK #4 (Little)      {345000 - 395000} 3 reps
+    % TASK #5 (Middle+Ring) {600000 - 650000} 3 reps
+    % TASK #6 (Middle+Ring) {735000 - 780000} 3 reps
     
     if D == 1
         s = 50000;
