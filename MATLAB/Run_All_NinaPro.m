@@ -1,5 +1,34 @@
 clear force_res Ctot
 
+% ////////////////////////////////////////////////////////////////////////////
+% Run two different process: Calibration and Offline Test. 
+% The total number of DOF's is set to 4 (index, middle, ring and little finger respectively)
+% How to run:
+% 1 - Choose the number of subjects (up to 40)
+% 2 - Choose the number of synergies
+% 3 - Choose the reescaling approach (reescaling.m)
+% 4 - Run
+% After the offline test is completed the program will stop. 
+%
+% The error results are save in the structure:
+% NinaResults(reescaling).Subject(s).K(k).ERR.D(TASK,DOF) 
+% NinaResults(reescaling).Subject(s).K(k).ERR.RMSE(TASK,DOF) 
+% NinaResults(reescaling).Subject(s).K(k).ERR.RS(TASK,DOF) 
+%
+% DATASET:
+% The data includes six tasks (flexions), six repetitions each: 
+% 1- Index
+% 2- Middle
+% 3- Ring
+% 4- Little
+% 5- Index + Little
+% 6- Ring + Little
+% 
+% The data is split into 3 repetitions for calibration and 3 repetitions for testing.
+% ////////////////////////////////////////////////////////////////////////////
+
+
+
 addpath('Data')
 % Set NinaPro params
 electrodes = 10;
@@ -27,14 +56,12 @@ StartSubject = 1;
 FinalSubject = 1;
 
 % Set number of synergies
-MINK = 1;
-MAXK = 10;
+MINK = 2;
+MAXK = 2;
 
 % Non-negative matrix factorization mode
 % 'nmf' -> Regular NNMF
 % 'snmf' -> Sparse NMF
-
-
 % Algorithm = 'snmf';
 % Sparsity = 0.3;
 
@@ -345,17 +372,17 @@ disp('Ouuuu yeah!')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ///////////////////////////////////////////////
 
-%% Plot Results of ALL K's for a specific Subject
+%% Plot Results for a specific Subject and TASK
 
 % ----------------
 Subject     =    37
 TASK        =    6
-k           =    2
+% k           =    2
 % -----------------
 
 figure('units', 'normalized', 'outerposition', [0 0.05 1 0.5])
 
-for k = k:k
+for k = MINK:MAXK
     [emg,force] = loadsubject(Subject);
     if Subject == 8
         Subject =9;
